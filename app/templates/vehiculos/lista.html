@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Vehículos · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-medium uppercase tracking-[0.16em] text-apple-muted dark:text-apple-muted-dark">Inventario</p>
+      <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Vehículos</h1>
+      <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Gestiona el inventario, sus precios en VES y la referencia en USD.</p>
+    </div>
+    <a href="{{ url_for('pages.vehiculo_nuevo') }}" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4"><path d="M12 5v14M5 12h14"/></svg>
+      Nuevo vehículo
+    </a>
+  </div>
+
+  <form id="filtros-vehiculos" class="card mt-6 p-4">
+    <div class="grid gap-3 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <label class="label" for="f-q">Buscar</label>
+        <input id="f-q" name="q" type="search" class="input" placeholder="Marca, modelo, VIN o placa">
+      </div>
+      <div class="lg:col-span-2">
+        <label class="label" for="f-estado">Estado</label>
+        <select id="f-estado" name="estado" class="input">
+          <option value="">Todos</option>
+          <option value="disponible">Disponible</option>
+          <option value="reservado">Reservado</option>
+          <option value="vendido">Vendido</option>
+        </select>
+      </div>
+      <div class="lg:col-span-2">
+        <label class="label" for="f-marca">Marca</label>
+        <input id="f-marca" name="marca" type="text" class="input" placeholder="Toyota">
+      </div>
+      <div class="lg:col-span-2">
+        <label class="label" for="f-precio-min">Precio mín. (Bs.)</label>
+        <input id="f-precio-min" name="precio_min" type="text" inputmode="decimal" class="input" placeholder="0">
+      </div>
+      <div class="lg:col-span-2">
+        <label class="label" for="f-precio-max">Precio máx. (Bs.)</label>
+        <input id="f-precio-max" name="precio_max" type="text" inputmode="decimal" class="input" placeholder="Sin límite">
+      </div>
+    </div>
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <label class="label mb-0" for="f-sort">Ordenar</label>
+        <select id="f-sort" name="sort" class="input min-h-9 w-auto py-1.5 text-xs">
+          <option value="reciente">Más recientes</option>
+          <option value="precio_asc">Precio: menor a mayor</option>
+          <option value="precio_desc">Precio: mayor a menor</option>
+          <option value="anio_desc">Año: más nuevo</option>
+          <option value="anio_asc">Año: más antiguo</option>
+          <option value="marca">Marca A–Z</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="reset" class="btn btn-secondary btn-sm">Limpiar</button>
+        <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="vehiculos-resultado" class="mt-6" aria-live="polite">
+    <div class="card p-6">
+      <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+  <div id="vehiculos-paginacion" class="mt-4"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/vehiculos.js') }}"></script>
+{% endblock %}

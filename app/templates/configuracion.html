@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Configuración · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div>
+    <p class="text-xs font-medium uppercase tracking-[0.16em] text-apple-muted dark:text-apple-muted-dark">Administración</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Configuración</h1>
+    <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Tasa de cambio VES/USD y parámetros operativos del concesionario.</p>
+  </div>
+
+  <div class="mt-6 grid gap-6 lg:grid-cols-3">
+    <section class="card p-5 lg:col-span-1">
+      <h2 class="text-base font-semibold tracking-tight">Tasa vigente</h2>
+      <div id="config-tasa-actual" class="mt-4">
+        <div class="h-24 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+      </div>
+      <form id="tasa-form" class="mt-5 space-y-3" novalidate>
+        <div>
+          <label for="tasa-input" class="label">Nueva tasa (Bs. por 1 USD)</label>
+          <input id="tasa-input" name="ves_por_usd" type="text" inputmode="decimal" class="input" placeholder="36,50" required>
+          <p class="hint">Acepta coma o punto decimal. Ejemplo: 36,50.</p>
+        </div>
+        <div id="tasa-error" class="hidden field-error"></div>
+        <button type="submit" class="btn btn-primary w-full">Actualizar tasa</button>
+      </form>
+      <p class="mt-4 text-xs text-apple-muted dark:text-apple-muted-dark">Cada venta conserva la tasa y el precio en USD del momento. Actualizar la tasa no altera ventas anteriores.</p>
+    </section>
+
+    <section class="card p-5 lg:col-span-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-semibold tracking-tight">Historial de tasas</h2>
+          <p class="mt-0.5 text-xs text-apple-muted dark:text-apple-muted-dark">Últimos cambios registrados.</p>
+        </div>
+      </div>
+      <div id="config-tasa-historial" class="mt-4">
+        <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="card mt-6 p-5">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-base font-semibold tracking-tight">Usuarios</h2>
+        <p class="mt-1 text-sm text-apple-muted dark:text-apple-muted-dark">Crea cuentas, asigna roles y activa o desactiva el acceso desde la gestión visual.</p>
+      </div>
+      <a href="{{ url_for('pages.usuarios') }}" class="btn btn-secondary btn-sm">Gestionar usuarios</a>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/configuracion.js') }}"></script>
+{% endblock %}

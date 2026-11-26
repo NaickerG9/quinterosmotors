@@ -1,0 +1,22 @@
+# Entorno
+.env
+.venv/
+Proyecto/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Base de datos y archivos subidos
+instance/
+!instance/.gitkeep
+*.db
+*.sqlite3
+backups/
+
+# Frontend
+node_modules/
+npm-debug.log*
+.DS_Store

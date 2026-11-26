@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Detalle del cliente · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in" id="cliente-detalle" data-cliente-id="{{ cliente_id }}">
+  <div class="flex items-center gap-2 text-sm text-apple-muted dark:text-apple-muted-dark">
+    <a href="{{ url_for('pages.clientes') }}" class="hover:text-apple-ink dark:hover:text-apple-ink-dark">Clientes</a>
+    <span>/</span>
+    <span>Detalle</span>
+  </div>
+  <div id="cliente-contenido" class="mt-4">
+    <div class="card p-6">
+      <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/cliente-detalle.js') }}"></script>
+{% endblock %}

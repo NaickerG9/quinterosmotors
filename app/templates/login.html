@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="color-scheme" content="light dark">
+  <title>Iniciar sesión · {{ app_name }}</title>
+  <script src="{{ url_for('static', filename='js/theme-init.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <div class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
+    <div class="pointer-events-none absolute -left-32 -top-32 size-[28rem] rounded-full bg-apple-blue/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-40 -right-24 size-[30rem] rounded-full bg-purple-500/10 blur-3xl"></div>
+
+    <div class="relative w-full max-w-md">
+      <div class="mb-8 flex flex-col items-center text-center">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Quinteros Motor's" class="size-16 drop-shadow-2xl drop-shadow-blue-500/30">
+        <h1 class="mt-5 text-3xl font-semibold tracking-tight">{{ app_name }}</h1>
+        <p class="mt-1 text-sm text-apple-muted dark:text-apple-muted-dark">Gestión de tu concesionario, simple y clara.</p>
+      </div>
+
+      <div class="card p-6 sm:p-8">
+        <h2 class="text-xl font-semibold tracking-tight">Iniciar sesión</h2>
+        <p class="mt-1 text-sm text-apple-muted dark:text-apple-muted-dark">Accede con tu cuenta para continuar.</p>
+
+        <div id="login-error" class="mt-4 hidden rounded-xl border border-red-200 bg-red-50 px-3.5 py-3 text-sm text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300" role="alert"></div>
+
+        <form id="login-form" class="mt-6 space-y-4" novalidate>
+          <div>
+            <label for="email" class="label">Correo electrónico</label>
+            <input id="email" name="email" type="email" autocomplete="username" required class="input" placeholder="tu@correo.com">
+          </div>
+          <div>
+            <label for="password" class="label">Contraseña</label>
+            <div class="relative">
+              <input id="password" name="password" type="password" autocomplete="current-password" required class="input pr-12" placeholder="••••••••">
+              <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-apple-muted hover:text-apple-ink dark:text-apple-muted-dark dark:hover:text-apple-ink-dark" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" id="login-submit" class="btn btn-primary w-full">Entrar</button>
+        </form>
+
+      </div>
+
+      <p class="mt-6 text-center text-xs text-apple-muted dark:text-apple-muted-dark">{{ app_name }} · Gestión para concesionarios</p>
+    </div>
+  </div>
+
+  <script type="module" src="{{ url_for('static', filename='js/pages/login.js') }}"></script>
+</body>
+</html>

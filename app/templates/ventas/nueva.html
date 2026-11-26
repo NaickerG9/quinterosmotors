@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Nueva venta · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div class="flex items-center gap-2 text-sm text-apple-muted dark:text-apple-muted-dark">
+    <a href="{{ url_for('pages.ventas') }}" class="hover:text-apple-ink dark:hover:text-apple-ink-dark">Ventas</a>
+    <span>/</span>
+    <span>Nueva</span>
+  </div>
+  <div class="mt-2">
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Nueva venta</h1>
+    <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Selecciona el vehículo y el cliente. El precio en USD se calcula con la tasa vigente.</p>
+  </div>
+  <div id="venta-form-root" class="mt-6">
+    <div class="card p-6">
+      <div class="h-64 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/venta-nueva.js') }}"></script>
+{% endblock %}

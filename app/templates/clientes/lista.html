@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Clientes · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-medium uppercase tracking-[0.16em] text-apple-muted dark:text-apple-muted-dark">Relaciones</p>
+      <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Clientes</h1>
+      <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Directorio de compradores y su historial de compras.</p>
+    </div>
+    <button id="nuevo-cliente" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4"><path d="M12 5v14M5 12h14"/></svg>
+      Nuevo cliente
+    </button>
+  </div>
+
+  <form id="filtros-clientes" class="card mt-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-end">
+    <div class="flex-1">
+      <label class="label" for="c-q">Buscar</label>
+      <input id="c-q" name="q" type="search" class="input" placeholder="Nombre, documento, teléfono o correo">
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+    <button type="reset" class="btn btn-secondary btn-sm">Limpiar</button>
+  </form>
+
+  <div id="clientes-resultado" class="mt-6" aria-live="polite">
+    <div class="card p-6">
+      <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+  <div id="clientes-paginacion" class="mt-4"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/clientes.js') }}"></script>
+{% endblock %}

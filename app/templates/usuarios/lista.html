@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Usuarios · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-medium uppercase tracking-[0.16em] text-apple-muted dark:text-apple-muted-dark">Administración</p>
+      <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Usuarios</h1>
+      <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Gestiona las cuentas de acceso y sus roles en el concesionario.</p>
+    </div>
+    <button id="nuevo-usuario" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4"><path d="M12 5v14M5 12h14"/></svg>
+      Nuevo usuario
+    </button>
+  </div>
+
+  <form id="filtros-usuarios" class="card mt-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-end">
+    <div class="flex-1">
+      <label class="label" for="u-q">Buscar</label>
+      <input id="u-q" name="q" type="search" class="input" placeholder="Nombre o correo">
+    </div>
+    <div class="w-full sm:w-40">
+      <label class="label" for="u-rol">Rol</label>
+      <select id="u-rol" name="rol" class="input">
+        <option value="">Todos</option>
+        <option value="admin">Administrador</option>
+        <option value="vendedor">Vendedor</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+    <button type="reset" class="btn btn-secondary btn-sm">Limpiar</button>
+  </form>
+
+  <div id="usuarios-resultado" class="mt-6" aria-live="polite">
+    <div class="card p-6">
+      <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+  <div id="usuarios-paginacion" class="mt-4"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/usuarios.js') }}"></script>
+{% endblock %}

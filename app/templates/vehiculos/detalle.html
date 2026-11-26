@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Detalle del vehículo · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in" id="vehiculo-detalle" data-vehiculo-id="{{ vehiculo_id }}">
+  <div class="flex items-center gap-2 text-sm text-apple-muted dark:text-apple-muted-dark">
+    <a href="{{ url_for('pages.vehiculos') }}" class="hover:text-apple-ink dark:hover:text-apple-ink-dark">Vehículos</a>
+    <span>/</span>
+    <span>Detalle</span>
+  </div>
+
+  <div id="vehiculo-header" class="mt-2">
+    <div class="h-10 w-2/3 animate-pulse rounded-lg bg-black/5 dark:bg-white/5"></div>
+  </div>
+
+  <div id="vehiculo-banner" class="mt-4"></div>
+
+  <div class="mt-6 grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2 space-y-6">
+      <section class="card overflow-hidden" id="vehiculo-galeria">
+        <div class="aspect-[16/10] animate-pulse bg-black/5 dark:bg-white/5"></div>
+      </section>
+      <section class="card p-5" id="vehiculo-info">
+        <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+      </section>
+      <section class="card p-5" id="vehiculo-descripcion"></section>
+    </div>
+    <div class="space-y-6">
+      <section class="card p-5" id="vehiculo-precio"></section>
+      <section class="card p-5" id="vehiculo-imagenes"></section>
+      <section class="card p-5" id="vehiculo-admin"></section>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/vehiculo-detalle.js') }}"></script>
+{% endblock %}

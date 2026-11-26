@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Prospectos · {{ app_name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-medium uppercase tracking-[0.16em] text-apple-muted dark:text-apple-muted-dark">Oportunidades</p>
+      <h1 class="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Prospectos</h1>
+      <p class="mt-2 text-sm text-apple-muted dark:text-apple-muted-dark">Sigue el embudo desde el primer contacto hasta la conversión en cliente.</p>
+    </div>
+    <button id="nuevo-prospecto" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4"><path d="M12 5v14M5 12h14"/></svg>
+      Nuevo prospecto
+    </button>
+  </div>
+
+  <form id="filtros-prospectos" class="card mt-6 p-4">
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <label class="label" for="p-q">Buscar</label>
+        <input id="p-q" name="q" type="search" class="input" placeholder="Nombre, teléfono o correo">
+      </div>
+      <div>
+        <label class="label" for="p-estado">Estado</label>
+        <select id="p-estado" name="estado" class="input">
+          <option value="">Todos</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="contactado">Contactado</option>
+          <option value="negociacion">En negociación</option>
+          <option value="ganado">Ganado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="p-origen">Origen</label>
+        <select id="p-origen" name="origen" class="input">
+          <option value="">Todos</option>
+          <option value="presencial">Presencial</option>
+          <option value="telefono">Teléfono</option>
+          <option value="web">Web</option>
+          <option value="redes">Redes sociales</option>
+          <option value="referido">Referido</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="mt-3 flex justify-end gap-2">
+      <button type="reset" class="btn btn-secondary btn-sm">Limpiar</button>
+      <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+    </div>
+  </form>
+
+  <div id="prospectos-resultado" class="mt-6" aria-live="polite">
+    <div class="card p-6">
+      <div class="h-40 animate-pulse rounded-xl bg-black/5 dark:bg-white/5"></div>
+    </div>
+  </div>
+  <div id="prospectos-paginacion" class="mt-4"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/pages/prospectos.js') }}"></script>
+{% endblock %}

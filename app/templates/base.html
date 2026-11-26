@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}{{ app_name }} · Concesionario{% endblock %}</title>
+  <script src="{{ url_for('static', filename='js/theme-init.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body class="font-sans antialiased" data-user-role="{{ current_user.rol }}" data-user-name="{{ current_user.nombre }}">
+  <div class="min-h-screen lg:flex">
+    <div id="sidebar-overlay" class="fixed inset-0 z-30 hidden bg-black/30 backdrop-blur-sm lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-72 -translate-x-full flex-col border-r border-apple-line bg-white/80 px-4 py-5 backdrop-blur-2xl transition-transform duration-300 ease-out dark:border-apple-line-dark dark:bg-black/70 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+      <div class="flex items-center justify-between px-2">
+        <a href="{{ url_for('pages.dashboard') }}" class="flex items-center gap-3">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Quinteros Motor's" class="size-10 shrink-0 drop-shadow-lg drop-shadow-blue-500/25">
+          <span>
+            <span class="block text-sm font-semibold tracking-tight">{{ app_name }}</span>
+            <span class="block text-xs text-apple-muted dark:text-apple-muted-dark">Concesionario</span>
+          </span>
+        </a>
+        <button id="sidebar-close" class="icon-btn lg:hidden" aria-label="Cerrar menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <nav class="mt-8 flex flex-1 flex-col gap-1" aria-label="Navegación principal">
+        <a href="{{ url_for('pages.dashboard') }}" class="nav-link {{ 'nav-link-active' if active_page == 'dashboard' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
+          Dashboard
+        </a>
+        <a href="{{ url_for('pages.vehiculos') }}" class="nav-link {{ 'nav-link-active' if active_page == 'vehiculos' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M5 16.5 6.4 11a2 2 0 0 1 1.9-1.5h7.4A2 2 0 0 1 17.6 11L19 16.5"/><path d="M4 16.5h16v2.2a.8.8 0 0 1-.8.8h-1.4a.8.8 0 0 1-.8.8v-.7H7v.7a.8.8 0 0 1-.8.8H5.8a.8.8 0 0 1-.8.8v-2.2Z"/><path d="M7.5 14h.01M16.5 14h.01"/></svg>
+          Vehículos
+        </a>
+        <a href="{{ url_for('pages.clientes') }}" class="nav-link {{ 'nav-link-active' if active_page == 'clientes' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M16 19v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V19"/><circle cx="9.5" cy="7.5" r="3"/><path d="M17 11a3 3 0 1 0 0-6M21 19v-1.5a3.5 3.5 0 0 0-2.5-3.35"/></svg>
+          Clientes
+        </a>
+        <a href="{{ url_for('pages.ventas') }}" class="nav-link {{ 'nav-link-active' if active_page == 'ventas' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2v-17Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+          Ventas
+        </a>
+        <a href="{{ url_for('pages.prospectos') }}" class="nav-link {{ 'nav-link-active' if active_page == 'prospectos' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M3.5 5h17l-6.5 7.5V19l-4 2v-8.5L3.5 5Z"/></svg>
+          Prospectos
+        </a>
+
+        {% if current_user.rol == 'admin' %}
+        <div class="my-3 px-3 text-[11px] font-medium uppercase tracking-wider text-apple-muted/70 dark:text-apple-muted-dark/70">Administración</div>
+        <a href="{{ url_for('pages.usuarios') }}" class="nav-link {{ 'nav-link-active' if active_page == 'usuarios' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19v-1.2A4.3 4.3 0 0 1 7.8 13.5h2.4a4.3 4.3 0 0 1 4.3 4.3V19"/><path d="M16 6.2a3 3 0 0 1 0 5.6M20.5 19v-1.2a4.3 4.3 0 0 0-3-4.1"/></svg>
+          Usuarios
+        </a>
+        <a href="{{ url_for('pages.configuracion') }}" class="nav-link {{ 'nav-link-active' if active_page == 'configuracion' }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+          Configuración
+        </a>
+        {% endif %}
+      </nav>
+
+      <div class="mt-4 rounded-2xl border border-apple-line bg-white/60 p-3 dark:border-apple-line-dark dark:bg-white/5">
+        <div class="flex items-center gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-apple-blue/10 text-sm font-semibold text-apple-blue dark:bg-apple-blue-dark/15 dark:text-apple-blue-dark">{{ current_user.nombre[:1]|upper }}</span>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-medium">{{ current_user.nombre }}</p>
+            <p class="text-xs text-apple-muted dark:text-apple-muted-dark">{{ 'Administrador' if current_user.rol == 'admin' else 'Vendedor' }}</p>
+          </div>
+        </div>
+        <button id="logout-btn" class="btn btn-ghost mt-2 w-full justify-start px-2 text-xs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+          Cerrar sesión
+        </button>
+      </div>
+    </aside>
+
+    <div class="min-w-0 flex-1">
+      <header class="sticky top-0 z-20 border-b border-apple-line/70 bg-apple-bg/80 backdrop-blur-2xl dark:border-apple-line-dark/70 dark:bg-apple-bg-dark/70">
+        <div class="flex h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-2">
+            <button id="sidebar-toggle" class="icon-btn lg:hidden" aria-label="Abrir menú">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <div class="text-sm text-apple-muted dark:text-apple-muted-dark">
+              <span class="hidden sm:inline">Panel de gestión</span>
+              <span class="sm:hidden">{{ app_name }}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1">
+            <button id="theme-toggle" class="icon-btn" aria-label="Cambiar tema" title="Cambiar tema">
+              <svg class="size-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+              <svg class="hidden size-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/></svg>
+            </button>
+            <span class="ml-1 hidden items-center gap-2 rounded-full border border-apple-line bg-white/60 px-2 py-1.5 dark:border-apple-line-dark dark:bg-white/5 sm:flex">
+              <span class="flex size-7 items-center justify-center rounded-full bg-apple-blue/10 text-[11px] font-semibold text-apple-blue dark:bg-apple-blue-dark/15 dark:text-apple-blue-dark">{{ current_user.nombre[:1]|upper }}</span>
+              <span class="max-w-32 truncate text-xs font-medium">{{ current_user.nombre }}</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <main class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-root" class="pointer-events-none fixed inset-x-0 top-4 z-[70] flex flex-col items-center gap-2 px-4"></div>
+  <div id="modal-root"></div>
+
+  <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
